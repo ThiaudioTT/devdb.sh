@@ -3,7 +3,7 @@
 Devdb.sh is a simple script in shell to manage a development PostgreSQL database. It allows you to easily start, reset, and connect to a local development database using Docker.
 
 ```bash
-sudo wget -qO /usr/local/bin/devdb https://github.com/ThiaudioTT/devdb.sh/raw/master/devdb.sh && sudo chmod +x /usr/local/bin/devdb
+sudo wget -qO /usr/local/bin/devdb https://github.com/ThiaudioTT/devdb.sh/raw/main/devdb.sh && sudo chmod +x /usr/local/bin/devdb
 ```
 
 Now you can simply run:
