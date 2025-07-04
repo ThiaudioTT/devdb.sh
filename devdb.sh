@@ -48,15 +48,26 @@ fi
 docker volume inspect "$VOLUME_NAME" >/dev/null 2>&1 || \
   docker volume create "$VOLUME_NAME"
 
-# Run PostgreSQL container
-echo "==> Starting PostgreSQL in Docker (container: $CONTAINER_NAME)"
-docker run -d \
-  --restart unless-stopped \
-  -p "127.0.0.1:$HOST_PORT:5432" \
-  --name "$CONTAINER_NAME" \
-  -e POSTGRES_HOST_AUTH_METHOD=trust \
-  -v "$VOLUME_NAME":/var/lib/postgresql/data \
-  "$IMAGE_NAME"
+# Check if container already exists
+if docker ps -a --format "table {{.Names}}" | grep -q "^$CONTAINER_NAME$"; then
+  # Container exists, check if it's running
+  if docker ps --format "table {{.Names}}" | grep -q "^$CONTAINER_NAME$"; then
+    echo "==> PostgreSQL container '$CONTAINER_NAME' is already running"
+  else
+    echo "==> Starting existing PostgreSQL container '$CONTAINER_NAME'"
+    docker start "$CONTAINER_NAME"
+  fi
+else
+  # Container doesn't exist, create it
+  echo "==> Creating and starting PostgreSQL container '$CONTAINER_NAME'"
+  docker run -d \
+    --restart unless-stopped \
+    -p "127.0.0.1:$HOST_PORT:5432" \
+    --name "$CONTAINER_NAME" \
+    -e POSTGRES_HOST_AUTH_METHOD=trust \
+    -v "$VOLUME_NAME":/var/lib/postgresql/data \
+    "$IMAGE_NAME"
+fi
 
 # Construct and output DATABASE_URL for env
 DATABASE_URL="postgresql://postgres@127.0.0.1:$HOST_PORT/$DB_NAME"
