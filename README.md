@@ -41,5 +41,6 @@ Redis features:
 Access RedisInsight at: <http://127.0.0.1:5540>
 
 ---
-
-<img src="https://safebooru.org//samples/1044/sample_b291050f87ce6c95ff5644f3005fd5be5640b682.jpg?5920096"/>
+<div align="center">
+  <img src="https://safebooru.org//samples/1044/sample_b291050f87ce6c95ff5644f3005fd5be5640b682.jpg?5920096" width="400px"/>
+</div>
